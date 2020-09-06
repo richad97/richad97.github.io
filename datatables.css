@@ -1,0 +1,79 @@
+#global-table_wrapper,
+#us-table_wrapper {
+  overflow-x: hidden;
+  position: relative;
+  display: block;
+  width: 100%;
+  max-height: 245px;
+}
+#us-table,
+#global-table {
+  width: 100% !important;
+}
+
+label,
+input {
+  width: 100%;
+  margin: 0;
+}
+
+#global-new-search,
+#us-new-search {
+  height: auto;
+  border: 5px solid rgb(20, 20, 20);
+}
+
+.odd {
+  background-color: rgb(24, 24, 24) !important;
+}
+.odd:hover {
+  background-color: rgb(20, 20, 20) !important;
+}
+.even {
+  background-color: rgb(37, 37, 37) !important;
+}
+.even:hover {
+  background-color: rgb(34, 34, 34) !important;
+}
+td {
+  padding: 4px 5px !important;
+  font-size: 12px;
+  color: rgb(255, 255, 255);
+}
+.dt-col {
+  border: 0px solid red;
+}
+
+.t-names {
+  font-size: 10px;
+}
+.t-numbers {
+  font-size: 12px;
+}
+th {
+  padding: 7px 5px !important;
+  background-color: rgb(46, 46, 46);
+  font-size: 10px;
+  color: rgb(253, 253, 253);
+  font-weight: 300 !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(47, 47, 47);
+  border-radius: 20px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(80, 80, 80);
+}

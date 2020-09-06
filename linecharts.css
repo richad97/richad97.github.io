@@ -1,0 +1,16 @@
+#linechart-svg {
+  background-color: rgb(20, 20, 20);
+  border: 0px solid rgba(255, 255, 255, 0.315);
+}
+.line-graph {
+  fill: none;
+  stroke: rgb(224, 222, 94);
+  stroke-width: 1.1px;
+}
+
+.domain {
+  stroke: white;
+}
+.linechart-title {
+  fill: rgb(255, 255, 255);
+}

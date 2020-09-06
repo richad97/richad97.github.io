@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=PT+Sans&family=Quicksand:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="maps.css" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="datatables.css" />
+    <link rel="stylesheet" href="piecharts.css" />
+    <link rel="stylesheet" href="barcharts.css" />
+    <link rel="stylesheet" href="linecharts.css" />
+    <title>COVID-19 Dashboard</title>
+  </head>
+
+  <body>
+    <!-- MAIN CONTAINER -->
+    <div class="container-fluid px-2 my-cont">
+      <!-- TOTALS -->
+      <div class="row my-row mt-2">
+        <span class="col-sm-4 my-col total-row" id="type-total">TYPE </span>
+        <span class="col-sm-4 my-col total-row" id="case-total">TOTAL</span>
+        <span class="col-sm-4 my-col total-row" id="case-type">CASE</span>
+      </div>
+
+      <!-- FIRST ROW -->
+      <div class="row my-row justify-content-between mt-2">
+        <!-- US DATATABLE COLUMN -->
+        <div class="col-sm-2 my-col dt-col">
+          <!-- US TITLE -->
+          <div class="row my-row">
+            <div class="col-sm-12 my-col map-titles" id="us-datatable-title">
+              UNITED STATES
+            </div>
+          </div>
+          <!-- US BUTTONS -->
+          <div class="row my-row">
+            <div class="col-sm-6 my-col">
+              <button type="button" class="btn" id="us-btn-confirmed">
+                CONFIRMED
+              </button>
+            </div>
+            <div class="col-sm-6 my-col">
+              <button type="button" class="btn" id="us-btn-deaths">
+                DEATHS
+              </button>
+            </div>
+          </div>
+
+          <!--  US DATATABLE -->
+          <div class="row my-row">
+            <div class="col my-col" id="us-datatable"></div>
+          </div>
+          <div id="us-new-search"></div>
+        </div>
+
+        <!-- MAP COLUMN -->
+        <div
+          class="col-sm-8 my-col d-flex justify-content-center"
+          id="map-col"
+        ></div>
+
+        <!-- GLOBAL DATATABLE COLUMN -->
+        <div class="col-sm-2 my-col dt-col">
+          <!-- GLOBAL TITLE -->
+          <div class="row my-row">
+            <div
+              class="col-sm-12 my-col map-titles"
+              id="global-datatable-title"
+            >
+              GLOBAL
+            </div>
+          </div>
+          <!-- GLOBAL BUTTONS -->
+          <div class="row my-row">
+            <div class="col-sm-4 my-col">
+              <button type="button" class="btn" id="global-btn-confirmed">
+                CONFIRMED
+              </button>
+            </div>
+            <div class="col-sm-4 my-col">
+              <button type="button" class="btn" id="global-btn-deaths">
+                DEATHS
+              </button>
+            </div>
+            <div class="col-sm-4 my-col">
+              <button type="button" class="btn" id="global-btn-recovered">
+                RECOVERED
+              </button>
+            </div>
+          </div>
+
+          <!-- GLOBAL DATATABLE-->
+          <div class="row my-row">
+            <div class="col my-col" id="global-datatable"></div>
+          </div>
+          <div id="global-new-search"></div>
+        </div>
+      </div>
+
+      <!-- SECOND ROW -->
+      <div class="row my-row justify-content-between mt-2 mb-2">
+        <!-- BARCHART COLUMN -->
+        <div class="col-sm-4 padding-0 graph-col">
+          <div class="row my-row">
+            <div class="col-sm-6 sr-titles">TOP TEN</div>
+            <div class="col-sm-3 sr-titles"></div>
+            <div class="col-sm-3 sr-type" id="barchart-type">TYPE</div>
+          </div>
+          <div
+            class="col-sm-12 my-col d-flex justify-content-center"
+            id="barchart-col"
+          ></div>
+        </div>
+
+        <!-- PIECHART COLUMN -->
+        <div class="col-sm-4 padding-0 graph-col">
+          <div class="row my-row">
+            <div class="col-sm-6 sr-titles">TOP FIVE</div>
+            <div class="col-sm-3 sr-titles"></div>
+            <div class="col-sm-3 sr-type" id="piechart-type">TYPE</div>
+          </div>
+
+          <div
+            class="col-sm-12 my-col d-flex justify-content-center"
+            id="piechart-col"
+          ></div>
+        </div>
+
+        <!-- LINEGRAPH COLUMN -->
+
+        <div class="col-sm-4 padding-0 graph-col">
+          <div class="row my-row">
+            <div class="col-sm-6 sr-titles">CASES SINCE START</div>
+            <div class="col-sm-3 sr-titles"></div>
+            <div class="col-sm-3 sr-type" id="linechart-type">TYPE</div>
+          </div>
+          <div
+            class="col-sm-12 my-col d-flex justify-content-center"
+            id="linegraph-col"
+          ></div>
+        </div>
+      </div>
+
+      <div class="row my-row mt-2 mb-2 stamp">
+        Last Updated:
+        <div class="col-sm-3 my-col" id="update-stamp"></div>
+      </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/topojson.v2.min.js"></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
