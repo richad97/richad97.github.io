@@ -3,7 +3,6 @@ html {
 }
 body {
   background-color: rgb(26, 26, 26);
-  width: 100%;
   font-family: "PT Sans", sans-serif;
   font-family: "Quicksand", sans-serif;
 }
@@ -12,7 +11,7 @@ nav {
   text-align: center;
 }
 #case-total {
-  font-size: 1.3em;
+  font-size: 1.2em;
   text-align: center;
   font-weight: 400;
   width: 100%;
@@ -28,13 +27,14 @@ nav {
   padding: 0;
   margin: 0;
   color: rgb(221, 221, 221);
-}
-
-.my-row {
   background-color: rgb(20, 20, 20);
+}
+.my-row {
   margin: 0;
 }
 .my-col {
+  background-color: rgb(20, 20, 20);
+
   padding: 0%;
 }
 .my-cont {
@@ -76,6 +76,7 @@ nav {
 }
 .graph-col {
   border: 1px solid rgba(71, 71, 71, 0.158);
+  background-color: rgb(20, 20, 20);
 }
 .map-titles {
   padding: 0;
@@ -88,10 +89,12 @@ nav {
 .sr-titles {
   color: rgb(160, 160, 160);
   font-size: 13px;
+  background-color: rgb(20, 20, 20);
 }
 .sr-type {
   color: rgb(245, 245, 245);
   font-size: 12px;
+  background-color: rgb(20, 20, 20);
 }
 #update-stamp {
   color: rgb(200, 200, 200);
@@ -101,4 +104,5 @@ nav {
 .stamp {
   color: rgb(200, 200, 200);
   font-size: 13px;
+  background-color: rgb(20, 20, 20);
 }
