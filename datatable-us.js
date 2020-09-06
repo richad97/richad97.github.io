@@ -28,6 +28,9 @@ let usTableVar = $("#us-table").DataTable({
     $("#us-table_filter").detach().appendTo("#us-new-search");
   },
   language: { search: "", searchPlaceholder: "Search Counties" },
+  scrollY: 300,
+  scrollx: true,
+  scroller: true,
 });
 
 export function usTable(data, date) {

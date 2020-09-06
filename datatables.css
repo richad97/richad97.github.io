@@ -23,6 +23,13 @@ input {
   border: 5px solid rgb(20, 20, 20);
 }
 
+#global-table > thead > tr > th.sorting_disabled.t-names,
+#global-table > thead > tr > th.sorting_disabled.t-numbers,
+#us-table > thead > tr > th.sorting_disabled.t-names,
+#us-table > thead > tr > th.sorting_disabled.t-numbers {
+  display: none;
+}
+
 .odd {
   background-color: rgb(24, 24, 24) !important;
 }
