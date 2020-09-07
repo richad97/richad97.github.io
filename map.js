@@ -10,7 +10,13 @@ let svg = d3
   .append("svg")
   .attr("id", "global-map-svg")
   .attr("width", width - margin.left - margin.right)
-  .attr("height", height + margin.top + margin.bottom + 40);
+  .attr("height", height + margin.top + margin.bottom + 40)
+  .call(
+    d3.zoom().on("zoom", function () {
+      svg.attr("transform", d3.event.transform);
+    })
+  )
+  .append("g");
 
 let projection = d3
   .geoNaturalEarth1()
