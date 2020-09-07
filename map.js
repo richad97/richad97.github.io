@@ -8,6 +8,8 @@ let svg = d3
   .select("#map-col")
   .append("svg")
   .attr("id", "global-map-svg")
+  .attr("viewBox", "240 70 320 320")
+
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
   .call(
