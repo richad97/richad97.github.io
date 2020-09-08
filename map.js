@@ -1,28 +1,33 @@
 let formatNumber = d3.format(",.0f");
 
 let margin = { top: 0, right: 0, bottom: 0, left: 0 },
-  width = 800 - margin.left - margin.right,
+  width = parseInt(d3.select("#map-col").style("width")),
   height = 335 - margin.top - margin.bottom;
+
+var zoom = d3.zoom().scaleExtent([1, 15]).on("zoom", zoomed);
 
 let svg = d3
   .select("#map-col")
   .append("svg")
   .attr("id", "global-map-svg")
-  .attr("viewBox", "240 70 320 320")
-
+  .attr("viewBox", "340 10 220 220")
   .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .call(
-    d3.zoom().on("zoom", function () {
-      svg.attr("transform", d3.event.transform);
-    })
-  )
-  .append("g");
+  .attr("height", height + margin.top + margin.bottom);
+
+svg
+  .append("rect")
+  .attr("class", "background")
+  .attr("width", width)
+  .attr("height", height);
+
+let g = svg.append("g");
+
+svg.call(zoom); // delete this line to disable free zooming
 
 let projection = d3
   .geoNaturalEarth1()
   .scale(width / 7)
-  .translate([width / 2, height / 1.45]);
+  .translate([width / 2, height / 2]);
 
 let path = d3.geoPath().projection(projection);
 
@@ -31,7 +36,12 @@ let radius = d3
   .domain([0, 1e6 * 0.3])
   .range([0, 8]);
 
-let land = svg.append("path").attr("class", "land");
+let land = g.append("path").attr("class", "land");
+
+function zoomed() {
+  g.style("stroke-width", 1.5 / d3.event.transform.k + "px");
+  g.attr("transform", d3.event.transform); // updated for d3 v4
+}
 
 export function map(data, w, str, date) {
   let newSet = [];
@@ -48,7 +58,7 @@ export function map(data, w, str, date) {
 
   land.datum(topojson.feature(w, w.objects.land)).attr("d", path);
 
-  let circles = svg
+  let circles = g
     .attr("class", "bubbles")
     .selectAll("circle")
     .data(

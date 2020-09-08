@@ -10,15 +10,13 @@ let svg = d3
   .attr("id", "us-map-svg")
   .attr("viewBox", "170 0 600 600")
   .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom);
-/*
+  .attr("height", height + margin.top + margin.bottom)
   .call(
     d3.zoom().on("zoom", function () {
       svg.attr("transform", d3.event.transform);
     })
   )
   .append("g");
-  */
 
 let projection = d3.geoAlbers().scale(1290);
 
