@@ -1,22 +1,22 @@
 let formatNumber = d3.format(",.0f");
 
 let margin = { top: 0, right: 0, bottom: 0, left: 0 },
-  width = 800 - margin.left - margin.right,
+  width = 900 - margin.left - margin.right,
   height = 335 - margin.top - margin.bottom;
+
+let zoom = d3.zoom().scaleExtent([1, 15]).on("zoom", zoomed);
 
 let svg = d3
   .select("#map-col")
   .append("svg")
   .attr("id", "us-map-svg")
-  .attr("viewBox", "170 0 600 600")
+  .attr("viewBox", "250 70 450 450")
   .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .call(
-    d3.zoom().on("zoom", function () {
-      svg.attr("transform", d3.event.transform);
-    })
-  )
-  .append("g");
+  .attr("height", height + margin.top + margin.bottom);
+
+let g = svg.append("g");
+
+svg.call(zoom); // delete this line to disable free zooming
 
 let projection = d3.geoAlbers().scale(1290);
 
@@ -24,10 +24,15 @@ let path = d3.geoPath();
 
 let radius = d3
   .scaleSqrt()
-  .domain([0, 1e6 * 0.1])
+  .domain([0, 1e6 * 0.01])
   .range([0, 8]);
 
-let land = svg.append("path").attr("class", "land");
+let land = g.append("path").attr("class", "land");
+
+function zoomed() {
+  g.style("stroke-width", 1.5 / d3.event.transform.k + "px");
+  g.attr("transform", d3.event.transform); // updated for d3 v4
+}
 
 export function usMap(csv, w, str, date) {
   let newSet = [];
@@ -52,7 +57,7 @@ export function usMap(csv, w, str, date) {
 
   land.datum(topojson.feature(w, w.objects[str])).attr("d", path);
 
-  let circles = svg
+  let circles = g
     .attr("class", "bubbles")
     .selectAll("circle")
     .data(
