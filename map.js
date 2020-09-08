@@ -4,13 +4,13 @@ let margin = { top: 0, right: 0, bottom: 0, left: 0 },
   width = 900,
   height = 335 - margin.top - margin.bottom;
 
-var zoom = d3.zoom().scaleExtent([1, 15]).on("zoom", zoomed);
+let zoom = d3.zoom().scaleExtent([1, 15]).on("zoom", zoomed);
 
 let svg = d3
   .select("#map-col")
   .append("svg")
   .attr("id", "global-map-svg")
-  .attr("viewBox", "340 10 220 220")
+  .attr("viewBox", "320 30 220 220")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom);
 
@@ -33,7 +33,7 @@ let path = d3.geoPath().projection(projection);
 
 let radius = d3
   .scaleSqrt()
-  .domain([0, 1e6 * 0.3])
+  .domain([0, 1e6 * 0.5])
   .range([0, 8]);
 
 let land = g.append("path").attr("class", "land");

@@ -28,7 +28,7 @@ let globalTableVar = $("#global-table").DataTable({
     $("#global-table_filter").detach().appendTo("#global-new-search");
   },
   language: { search: "", searchPlaceholder: "Search Countries" },
-  scrollY: 300,
+  scrollY: 210,
   scrollx: true,
   scroller: true,
 });

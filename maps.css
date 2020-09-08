@@ -20,7 +20,7 @@
 }
 .bubbles {
   fill: rgba(245, 243, 113, 0.685);
-  stroke: rgba(255, 255, 255, 0.712);
+  stroke: rgba(255, 255, 255, 0.253);
   stroke-width: 0.5px;
 }
 circle:hover {

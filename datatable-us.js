@@ -28,7 +28,7 @@ let usTableVar = $("#us-table").DataTable({
     $("#us-table_filter").detach().appendTo("#us-new-search");
   },
   language: { search: "", searchPlaceholder: "Search Counties" },
-  scrollY: 300,
+  scrollY: 210,
   scrollx: true,
   scroller: true,
 });
