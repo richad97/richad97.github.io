@@ -24,7 +24,7 @@ let yAxis = d3.axisLeft().scale(yScale).ticks(7, "s");
 
 let xAxisEl = canvas
   .append("g")
-  .attr("class", "axis axis--x")
+  .attr("class", "axis axis--y")
   .attr("transform", "translate(0," + height + ")");
 
 let yAxisEl = canvas.append("g").attr("class", "axis axis--y").call(yAxis);

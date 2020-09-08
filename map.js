@@ -10,7 +10,7 @@ let svg = d3
   .select("#map-col")
   .append("svg")
   .attr("id", "global-map-svg")
-  .attr("viewBox", "320 30 220 220")
+  .attr("viewBox", "340 10 220 220")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom);
 
