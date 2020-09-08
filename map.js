@@ -1,7 +1,7 @@
 let formatNumber = d3.format(",.0f");
 
 let margin = { top: 0, right: 0, bottom: 0, left: 0 },
-  width = parseInt(d3.select("#map-col").style("width")),
+  width = 900,
   height = 335 - margin.top - margin.bottom;
 
 var zoom = d3.zoom().scaleExtent([1, 15]).on("zoom", zoomed);
