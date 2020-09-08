@@ -33,50 +33,15 @@
   <body>
     <!-- MAIN CONTAINER -->
     <div class="container-fluid px-2 my-cont">
-      <!-- TOTALS -->
+      <!-- FIRST ROW -->
       <div class="row my-row mt-2">
         <span class="col-sm-4 my-col total-row" id="type-total">TYPE </span>
         <span class="col-sm-4 my-col total-row" id="case-total">TOTAL</span>
         <span class="col-sm-4 my-col total-row" id="case-type">CASE</span>
       </div>
 
-      <!-- FIRST ROW -->
+      <!-- SECOND ROW -->
       <div class="row my-row justify-content-between mt-2">
-        <!-- US DATATABLE COLUMN -->
-        <div class="col-sm-2 my-col dt-col">
-          <!-- US TITLE -->
-          <div class="row my-row">
-            <div class="col-sm-12 my-col map-titles" id="us-datatable-title">
-              UNITED STATES
-            </div>
-          </div>
-          <!-- US BUTTONS -->
-          <div class="row my-row">
-            <div class="col-sm-6 my-col">
-              <button type="button" class="btn" id="us-btn-confirmed">
-                CONFIRMED
-              </button>
-            </div>
-            <div class="col-sm-6 my-col">
-              <button type="button" class="btn" id="us-btn-deaths">
-                DEATHS
-              </button>
-            </div>
-          </div>
-
-          <!--  US DATATABLE -->
-          <div class="row my-row">
-            <div class="col my-col" id="us-datatable"></div>
-          </div>
-          <div id="us-new-search"></div>
-        </div>
-
-        <!-- MAP COLUMN -->
-        <div
-          class="col-sm-8 my-col d-flex justify-content-center"
-          id="map-col"
-        ></div>
-
         <!-- GLOBAL DATATABLE COLUMN -->
         <div class="col-sm-2 my-col dt-col">
           <!-- GLOBAL TITLE -->
@@ -113,9 +78,44 @@
           </div>
           <div id="global-new-search"></div>
         </div>
+
+        <!-- MAP COLUMN -->
+        <div
+          class="col-sm-8 my-col d-flex justify-content-center"
+          id="map-col"
+        ></div>
+
+        <!-- US DATATABLE COLUMN -->
+        <div class="col-sm-2 my-col dt-col">
+          <!-- US TITLE -->
+          <div class="row my-row">
+            <div class="col-sm-12 my-col map-titles" id="us-datatable-title">
+              UNITED STATES
+            </div>
+          </div>
+          <!-- US BUTTONS -->
+          <div class="row my-row">
+            <div class="col-sm-6 my-col">
+              <button type="button" class="btn" id="us-btn-confirmed">
+                CONFIRMED
+              </button>
+            </div>
+            <div class="col-sm-6 my-col">
+              <button type="button" class="btn" id="us-btn-deaths">
+                DEATHS
+              </button>
+            </div>
+          </div>
+
+          <!--  US DATATABLE -->
+          <div class="row my-row">
+            <div class="col my-col" id="us-datatable"></div>
+          </div>
+          <div id="us-new-search"></div>
+        </div>
       </div>
 
-      <!-- SECOND ROW -->
+      <!-- THIRD ROW -->
       <div class="row my-row justify-content-between mt-2 mb-2">
         <!-- BARCHART COLUMN -->
         <div class="col-sm-4 padding-0 graph-col">
@@ -159,6 +159,7 @@
         </div>
       </div>
 
+      <!-- FOURTH ROW -->
       <div class="row my-row mt-2 mb-2 stamp">
         Last Updated:
         <div class="col-sm-3 my-col" id="update-stamp"></div>
