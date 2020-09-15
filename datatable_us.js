@@ -1,10 +1,11 @@
-let formatNumber = d3.format(",.0f");
-
 d3.select("#us-datatable").append("table").attr("id", "us-table");
-let arr = [];
+
+const formatNumber = d3.format(",.0f");
+
+const arr = [];
 
 //Datatable
-let usTableVar = $("#us-table").DataTable({
+const usTableVar = $("#us-table").DataTable({
   bLengthChange: false,
   bSortClasses: false,
   bSort: false,
@@ -24,7 +25,7 @@ let usTableVar = $("#us-table").DataTable({
     { className: "t-names", targets: [0] },
     { className: "t-numbers", targets: [1] },
   ],
-  initComplete: function () {
+  initComplete: () => {
     $("#us-table_filter").detach().appendTo("#us-new-search");
   },
   language: { search: "", searchPlaceholder: "Search Counties" },
@@ -34,10 +35,10 @@ let usTableVar = $("#us-table").DataTable({
 });
 
 export function usTable(data, date) {
-  let newArr = [];
+  const newArr = [];
 
   data.forEach((obj) => {
-    let newObj = {
+    const newObj = {
       county: obj.Combined_Key,
       total: +obj[date],
     };
@@ -51,7 +52,8 @@ export function usTable(data, date) {
   usTableVar.rows.add(newArr); // Add new data
   usTableVar.columns.adjust().draw(); // Redraw the DataTable
 
-  let caseTotal = newArr.reduce((a, { total }) => a + total, 0);
+  //CASE-TOTAL
+  const caseTotal = newArr.reduce((a, { total }) => a + total, 0);
 
   d3.select("#case-total").text(`${formatNumber(caseTotal)}`);
 }

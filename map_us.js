@@ -1,10 +1,10 @@
 const formatNumber = d3.format(",.0f");
 
+const zoom = d3.zoom().scaleExtent([1, 15]).on("zoom", zoomed);
+
 const margin = { top: 0, right: 0, bottom: 0, left: 0 },
   width = 900 - margin.left - margin.right,
   height = 335 - margin.top - margin.bottom;
-
-const zoom = d3.zoom().scaleExtent([1, 15]).on("zoom", zoomed);
 
 const svg = d3
   .select("#map-col")
@@ -13,8 +13,6 @@ const svg = d3
   .attr("viewBox", "250 70 450 450")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom);
-
-const g = svg.append("g");
 
 svg.call(zoom); // delete this line to disable free zooming
 
@@ -27,11 +25,13 @@ const radius = d3
   .domain([0, 1e6 * 0.01])
   .range([0, 8]);
 
+const g = svg.append("g");
+
 const land = g.append("path").attr("class", "land");
 
 function zoomed() {
   g.style("stroke-width", 1.5 / d3.event.transform.k + "px");
-  g.attr("transform", d3.event.transform); // updated for d3 v4
+  g.attr("transform", d3.event.transform);
 }
 
 export function usMap(csv, w, str, date) {
@@ -48,13 +48,6 @@ export function usMap(csv, w, str, date) {
     newSet.push(keyValues);
   });
 
-  land.attr("class", "county-borders").attr(
-    "d",
-    topojson.mesh(w, w.objects[str], (a, b) => {
-      return a !== b;
-    })
-  );
-
   land.datum(topojson.feature(w, w.objects[str])).attr("d", path);
 
   const circles = g
@@ -70,6 +63,7 @@ export function usMap(csv, w, str, date) {
     .enter()
     .append("circle")
     .merge(circles)
+    // REVISE
     .attr("transform", "translate(0,50)")
     .attr("cx", (d) => projection([d.long, d.lat])[0])
     .attr("cy", (d) => projection([d.long, d.lat])[1])

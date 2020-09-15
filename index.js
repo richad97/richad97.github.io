@@ -56,6 +56,8 @@ function ready(
   us,
   world
 ) {
+  if (error) throw error;
+
   //LOADED AT START
   barChart(gDeathsCSV, "Country/Region", date);
 

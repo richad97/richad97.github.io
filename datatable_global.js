@@ -1,10 +1,10 @@
-let formatNumber = d3.format(",.0f");
-
 d3.select("#global-datatable").append("table").attr("id", "global-table");
-let arr = [];
 
-//Datatable
-let globalTableVar = $("#global-table").DataTable({
+const formatNumber = d3.format(",.0f");
+
+const arr = [];
+
+const globalTableVar = $("#global-table").DataTable({
   bLengthChange: false,
   bSortClasses: false,
   bSort: false,
@@ -24,7 +24,7 @@ let globalTableVar = $("#global-table").DataTable({
     { className: "t-names", targets: [0] },
     { className: "t-numbers", targets: [1] },
   ],
-  initComplete: function () {
+  initComplete: () => {
     $("#global-table_filter").detach().appendTo("#global-new-search");
   },
   language: { search: "", searchPlaceholder: "Search Countries" },
@@ -34,10 +34,10 @@ let globalTableVar = $("#global-table").DataTable({
 });
 
 export function globalTable(data, date) {
-  let newArr = [];
+  const newArr = [];
 
   data.forEach((obj) => {
-    let newObj = {
+    const newObj = {
       Country: obj["Country/Region"],
       confirmed: +obj[date],
     };
@@ -51,13 +51,9 @@ export function globalTable(data, date) {
   globalTableVar.rows.add(newArr); // Add new data
   globalTableVar.columns.adjust().draw(); // Redraw the DataTable
 
-  let caseTotal = newArr.reduce((a, { confirmed }) => a + confirmed, 0);
+  //CASE TOTAL
+
+  const caseTotal = newArr.reduce((a, { confirmed }) => a + confirmed, 0);
 
   d3.select("#case-total").text(`${formatNumber(caseTotal)}`);
 }
-
-/*
-  //Global Confirmed Total
-
-
-*/

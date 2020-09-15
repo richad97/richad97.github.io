@@ -1,10 +1,10 @@
-let formatNumber = d3.format(",.0f");
+const formatNumber = d3.format(",.0f");
 
-let margin = { top: -5, right: 0, bottom: 0, left: 0 },
+const margin = { top: -5, right: 0, bottom: 0, left: 0 },
   width = 250 - margin.left - margin.right,
   height = 250 - margin.top - margin.bottom;
 
-let svg = d3
+const svg = d3
   .select("#piechart-col")
   .append("svg")
   .attr("id", "piechart-svg")
@@ -13,13 +13,13 @@ let svg = d3
   .append("g")
   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-let radius = width / 3;
+const radius = width / 3;
 
-let arc = d3.arc().innerRadius(0).outerRadius(radius);
+const arc = d3.arc().innerRadius(0).outerRadius(radius);
 
-let labelNameArc = d3.arc().innerRadius(130).outerRadius(radius);
+const labelNameArc = d3.arc().innerRadius(135).outerRadius(radius);
 
-let color = d3.scaleOrdinal([
+const color = d3.scaleOrdinal([
   "#5E5D5E",
   "#7C7C7C",
   "#9B9B9B",
@@ -27,9 +27,9 @@ let color = d3.scaleOrdinal([
   "#FFFFFF",
 ]);
 
-function wrap(text) {
+const wrap = (text) => {
   text.each(function (d) {
-    var text = d3.select(this),
+    let text = d3.select(this),
       words = text.text().split(/\s+/).reverse(),
       word,
       lineNumber = 0,
@@ -39,7 +39,7 @@ function wrap(text) {
     // loop the words
     while ((word = words.pop())) {
       // build tspan
-      var tspan = text
+      let tspan = text
         .append("tspan")
         .attr("dy", ++lineNumber * lineHeight + "em")
         .text(word);
@@ -56,14 +56,14 @@ function wrap(text) {
       }
     }
   });
-}
+};
 
 export function pieChart(data, str, date) {
-  let arr = [];
+  const arr = [];
 
   data.forEach((elem) => {
-    let mostRecent = +elem[date];
-    let country = elem[str];
+    const mostRecent = +elem[date];
+    const country = elem[str];
 
     window.obj = {
       Daily: mostRecent,
@@ -73,22 +73,24 @@ export function pieChart(data, str, date) {
     arr.push(obj);
   });
 
-  let newSet = arr.sort((a, b) => (a.Daily > b.Daily ? -1 : 1)).slice(0, 5);
+  const newSet = arr.sort((a, b) => (a.Daily > b.Daily ? -1 : 1)).slice(0, 5);
 
   function update() {
-    let pie = d3
+    const pie = d3
       .pie()
-      .value(function (d) {
+      .value((d) => {
         return d.Daily;
       })
       .padAngle(0.0);
-    let path = svg.selectAll("path").data(pie(newSet));
-    let labelName = svg.selectAll(".labels").data(pie(newSet));
+
+    const path = svg.selectAll("path").data(pie(newSet));
+    const labelName = svg.selectAll(".labels").data(pie(newSet));
+
     path
       .enter()
       .append("path")
 
-      .attr("fill", function (d) {
+      .attr("fill", (d) => {
         return color(d.data.Daily);
       })
       .attr("d", arc)
@@ -99,11 +101,11 @@ export function pieChart(data, str, date) {
       .enter()
       .append("text")
       .merge(labelName)
-      .attr("transform", function (d) {
+      .attr("transform", (d) => {
         return "translate(" + labelNameArc.centroid(d) + ")";
       })
       .attr("text-anchor", "middle")
-      .text(function (d) {
+      .text((d) => {
         return `${d.data.Country} ${formatNumber(d.data.Daily)}`;
       })
       .attr("class", "labels")
