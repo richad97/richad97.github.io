@@ -1,10 +1,10 @@
 import { barChart } from "/barchart.js";
 import { pieChart } from "/piechart.js";
 import { lineChart } from "/linechart.js";
-import { map } from "/map.js";
-import { usMap } from "/mapus.js";
-import { globalTable } from "/datatable-global.js";
-import { usTable } from "/datatable-us.js";
+import { map } from "/map_global.js";
+import { usMap } from "/map_us.js";
+import { globalTable } from "/datatable_global.js";
+import { usTable } from "/datatable_us.js";
 
 d3.queue()
 

@@ -1,10 +1,10 @@
-let formatNumber = d3.format(",.0f");
+const formatNumber = d3.format(",.0f");
 
-let margin = { top: 0, right: 0, bottom: 0, left: 0 },
+const zoom = d3.zoom().scaleExtent([1, 15]).on("zoom", zoomed);
+
+const margin = { top: 0, right: 0, bottom: 0, left: 0 },
   width = 900,
   height = 335 - margin.top - margin.bottom;
-
-let zoom = d3.zoom().scaleExtent([1, 15]).on("zoom", zoomed);
 
 let svg = d3
   .select("#map-col")
@@ -20,23 +20,23 @@ svg
   .attr("width", width)
   .attr("height", height);
 
-let g = svg.append("g");
-
 svg.call(zoom); // delete this line to disable free zooming
 
-let projection = d3
+const projection = d3
   .geoNaturalEarth1()
   .scale(width / 7)
   .translate([width / 2, height / 2]);
 
-let path = d3.geoPath().projection(projection);
+const path = d3.geoPath().projection(projection);
 
-let radius = d3
+const radius = d3
   .scaleSqrt()
   .domain([0, 1e6 * 0.5])
   .range([0, 8]);
 
-let land = g.append("path").attr("class", "land");
+const g = svg.append("g");
+
+const land = g.append("path").attr("class", "land");
 
 function zoomed() {
   g.style("stroke-width", 1.5 / d3.event.transform.k + "px");
@@ -44,10 +44,10 @@ function zoomed() {
 }
 
 export function map(data, w, str, date) {
-  let newSet = [];
+  const newSet = [];
 
   data.forEach((obj) => {
-    let keyValues = {
+    const keyValues = {
       lat: obj["Lat"],
       long: obj["Long"],
       name: obj[str],
@@ -58,11 +58,11 @@ export function map(data, w, str, date) {
 
   land.datum(topojson.feature(w, w.objects.land)).attr("d", path);
 
-  let circles = g
+  const circles = g
     .attr("class", "bubbles")
     .selectAll("circle")
     .data(
-      newSet.sort(function (a, b) {
+      newSet.sort((a, b) => {
         return b.total - a.total;
       })
     );
@@ -76,7 +76,7 @@ export function map(data, w, str, date) {
     .attr("r", (d) => radius(d.total))
     .append("title");
 
-  circles.select("title").text(function (d) {
+  circles.select("title").text((d) => {
     return `${d.name} - ${formatNumber(d.total)}`;
   });
 }
