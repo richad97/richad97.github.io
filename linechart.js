@@ -1,72 +1,70 @@
-let margin = { top: 20, right: 20, bottom: 70, left: 45 },
-  width,
+const margin = { top: 20, right: 20, bottom: 70, left: 45 },
   height = 250 - margin.top - margin.bottom;
 
-let svg = d3
+let width;
+
+const svg = d3
   .select("#linegraph-col")
   .append("svg")
   .attr("id", "linechart-svg")
   .attr("height", height + margin.top + margin.bottom);
 
-let canvas = svg
+const rect = svg
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-let label = canvas.append("text").attr("class", "linechart-title");
+const line = d3.line();
 
-let xGrid = canvas
+const path = rect.append("path").attr("class", "line");
+
+const xScale = d3.scaleTime();
+const yScale = d3.scaleLinear().range([height, 0]);
+
+const xAxis = d3.axisBottom().scale(xScale);
+const yAxis = d3.axisLeft().scale(yScale).ticks(6, "s");
+
+const xAxisG = rect
+  .append("g")
+  .attr("transform", "translate(0," + height + ")");
+
+const yAxisG = rect.append("g").call(yAxis);
+
+const xGrid = rect
   .append("g")
   .attr("class", "grid")
   .attr("transform", "translate(0," + height + ")");
 
-let yGrid = canvas.append("g").attr("class", "grid");
+const yGrid = rect.append("g").attr("class", "grid");
 
-let xScale = d3.scaleTime();
-let yScale = d3.scaleLinear().range([height, 0]);
-
-let xAxis = d3.axisBottom().scale(xScale);
-let yAxis = d3.axisLeft().scale(yScale).ticks(6, "s");
-
-let line = d3.line();
-
-let path = canvas.append("path").attr("class", "line");
-
-let xAxisEl = canvas
-  .append("g")
-  .attr("class", "y-axis")
-  .attr("transform", "translate(0," + height + ")");
-
-let yAxisEl = canvas.append("g").attr("class", "y-axis").call(yAxis);
-
-function make_x_gridlines() {
+const make_x_gridlines = () => {
   return d3.axisBottom(xScale).ticks(10);
-}
+};
 
-function make_y_gridlines() {
+const make_y_gridlines = () => {
   return d3.axisLeft(yScale).ticks(6);
-}
+};
 
-export function lineChart(data, th) {
-  let sum = data.reduce(function (a, b) {
-    Object.keys(b).forEach(function (key) {
+export function lineChart(data) {
+  const sum = data.reduce((a, b) => {
+    Object.keys(b).forEach((key) => {
       a[key] = (a[key] || 0) + +b[key];
     });
     return a;
   }, {});
 
-  // REVISE! SHAVES BEGINNING DATES WHEN US IS CALLED BUT WORKS // DAYS WERE ZERO
+  // REVISE! SHAVES LIKE 7 DAYS IN BEGINNING
 
-  let date = Object.keys(sum).slice(12),
+  const date = Object.keys(sum).slice(12),
     total = Object.values(sum).slice(12);
 
   // REVISE!
 
-  let newSet = [];
+  const newSet = [];
 
   date.forEach((num1, index) => {
-    let object1 = {};
+    const object1 = {};
 
-    let num2 = total[index];
+    const num2 = total[index];
 
     object1["Dates"] = new Date(num1);
     object1["Total"] = num2;
@@ -74,8 +72,8 @@ export function lineChart(data, th) {
     newSet.push(object1);
   });
 
-  let xValue = (d) => d.Dates;
-  let yValue = (d) => d.Total;
+  const xValue = (d) => d.Dates;
+  const yValue = (d) => d.Total;
 
   function update() {
     path.data([newSet]).attr("class", "line-graph");
@@ -89,7 +87,7 @@ export function lineChart(data, th) {
     xAxis.scale(xScale);
     yAxis.scale(yScale);
 
-    xAxisEl
+    xAxisG
       .call(xAxis)
       .selectAll("text")
       .style("text-anchor", "end")
@@ -97,7 +95,8 @@ export function lineChart(data, th) {
       .attr("dy", ".15em")
       .attr("y", "1.5em")
       .attr("transform", "rotate(-35)");
-    yAxisEl.call(yAxis);
+
+    yAxisG.call(yAxis);
 
     line
       .x((d) => xScale(xValue(d)))
@@ -119,14 +118,6 @@ export function lineChart(data, th) {
       margin.right;
 
     svg.attr("width", width + margin.left + margin.right);
-
-    label
-      .attr("x", width / 8)
-      .attr("y", height / 10 - 40)
-      .attr("text-anchor", "middle")
-      .style("font-size", "16px")
-      .style("text-decoration", "none")
-      .text(`Top Ten ${th}`);
 
     xScale.range([0, width]);
 
