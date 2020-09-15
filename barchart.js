@@ -1,82 +1,76 @@
-let formatNumber = d3.format(",.0f");
+const formatNumber = d3.format(",.0f");
 
-let margin = { top: 20, right: 20, bottom: 70, left: 45 },
-  width,
+const margin = { top: 20, right: 20, bottom: 70, left: 45 },
   height = 250 - margin.top - margin.bottom;
 
-let svg = d3
+let width;
+
+const svg = d3
   .select("#barchart-col")
   .append("svg")
   .attr("id", "barchart-svg")
   .attr("height", height + margin.top + margin.bottom);
 
-let canvas = svg
+const rect = svg
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-let yGrid = canvas.append("g").attr("class", "grid");
+const xScale = d3.scaleBand().padding(0.55);
+const yScale = d3.scaleLinear();
 
-let xScale = d3.scaleBand().padding(0.55);
-let yScale = d3.scaleLinear();
+const xAxis = d3.axisBottom().scale(xScale);
+const yAxis = d3.axisLeft().scale(yScale).ticks(7, "s");
 
-let xAxis = d3.axisBottom().scale(xScale);
-let yAxis = d3.axisLeft().scale(yScale).ticks(7, "s");
+const yAxisG = rect.append("g").call(yAxis);
 
-let xAxisEl = canvas
+const xAxisG = rect
   .append("g")
-  .attr("class", "axis axis--y")
   .attr("transform", "translate(0," + height + ")");
 
-let yAxisEl = canvas.append("g").attr("class", "axis axis--y").call(yAxis);
+const yGrid = rect.append("g").attr("class", "grid");
 
-function make_x_gridlines() {
+const make_x_gridlines = () => {
   return d3.axisBottom(xScale).ticks(10);
-}
+};
 
-function make_y_gridlines() {
+const make_y_gridlines = () => {
   return d3.axisLeft(yScale).ticks(9);
-}
+};
 
 export function barChart(data, str, date) {
-  let arr = [];
-
-  /*
-    if (data === "gConfirmedCSV" || "gDeathsCSV" || "gRecoveredCSV") {
-    } else if (data === "uConfirmedCSV" || "uDeathsCSV") {
-    }
-  */
+  const arr = [];
 
   data.forEach((obj) => {
-    let newObj = {
-      Land: obj[str],
+    const newObj = {
+      land: obj[str],
       date: +obj[date],
     };
-
     arr.push(newObj);
   });
 
-  let newSet = arr.sort((a, b) => (a.date > b.date ? -1 : 1)).slice(0, 10);
+  const newSet = arr.sort((a, b) => (a.date > b.date ? -1 : 1)).slice(0, 10);
 
-  let xValue = (d) => d.Land;
-  let yValue = (d) => d.date;
+  const xValue = (d) => d.land;
+  const yValue = (d) => d.date;
 
   function update() {
     xScale.domain(
-      newSet.map(function (d) {
+      newSet.map((d) => {
         return xValue(d);
       })
     );
 
     yScale.domain([
       0,
-      d3.max(newSet, function (d) {
+      d3.max(newSet, (d) => {
         return yValue(d);
       }),
     ]);
 
     xAxis.scale(xScale);
     yAxis.scale(yScale);
-    xAxisEl
+
+    xAxisG
       .call(xAxis)
       .selectAll("text")
       .style("text-anchor", "end")
@@ -85,14 +79,14 @@ export function barChart(data, str, date) {
       .attr("y", "1.5em")
       .attr("transform", "rotate(-35)");
 
-    yAxisEl.call(yAxis);
+    yAxisG.call(yAxis);
 
     yGrid
       .transition()
       .duration(1400)
       .call(make_y_gridlines().tickSize(-width).tickFormat(""));
 
-    let bars = svg.select("g").selectAll("rect").data(newSet);
+    const bars = rect.select("g").selectAll("rect").data(newSet);
 
     bars.enter().append("rect");
 
@@ -100,23 +94,23 @@ export function barChart(data, str, date) {
       .merge(bars)
       .transition()
       .duration(1400)
-      .delay(function (d, i) {
+      .delay((d, i) => {
         return i * 80;
       })
-      .attr("x", function (d) {
+      .attr("x", (d) => {
         return xScale(xValue(d));
       })
-      .attr("y", function (d) {
+      .attr("y", (d) => {
         return yScale(yValue(d));
       })
       .attr("width", xScale.bandwidth())
-      .attr("height", function (d) {
+      .attr("height", (d) => {
         return height - yScale(yValue(d));
       });
 
     bars.append("title");
 
-    bars.select("title").text(function (d) {
+    bars.select("title").text((d) => {
       return `${formatNumber(yValue(d))}`;
     });
 
@@ -136,6 +130,7 @@ export function barChart(data, str, date) {
 
     update();
   }
+
   update();
   draw();
 
