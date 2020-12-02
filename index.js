@@ -32,13 +32,15 @@ d3.queue()
   .defer(d3.json, "https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json")
 
   .await(ready);
+ // let x  = `${curr_month}/${curr_date}/${curr_year}`;
 
-//UPDATES CSV DAILY IN CORRECT FORMAT
-let d = new Date(),
-  curr_month = d.getMonth() + 1, //MONTHS ARE ZERO BASED
-  curr_date = d.getDate() - 2,
-  curr_year = d.getFullYear().toString().substr(-2),
-  date = `${curr_month}/${curr_date}/${curr_year}`;
+  var dates = new Date();
+      dates.setDate(dates.getDate() - 2);
+      var formatTime = d3.timeFormat("%m/%d/%y");
+
+  let date = formatTime(dates)
+
+  console.log(date);
 
 //CHANGES BUTTON COLOR ON CLICK
 $("button").click(function () {
