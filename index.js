@@ -36,11 +36,11 @@ d3.queue()
 
   var dates = new Date();
       dates.setDate(dates.getDate() - 2);
-      var formatTime = d3.timeFormat("%m/%d/%y");
+      var formatTime = d3.timeFormat("%m/%e/%y");
 
-  let date = formatTime(dates)
+  let d = formatTime(dates);
 
-  console.log(date);
+  let date = d.replace(' ','');
 
 //CHANGES BUTTON COLOR ON CLICK
 $("button").click(function () {
