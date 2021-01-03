@@ -40,8 +40,9 @@ d3.queue()
 
   let d = formatTime(dates);
 
-  let date = d.replace(' ','');
+  let datee = d.replace(' ','');
 
+  let date = datee.replace("0","");
 //CHANGES BUTTON COLOR ON CLICK
 $("button").click(function () {
   $("button").removeClass("active");
